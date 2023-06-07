@@ -5,11 +5,11 @@ namespace AspxParser
 {
     public struct TagAttributes : IEnumerable<KeyValuePair<string, string>>
     {
-        public static TagAttributes Empty { get; } = new TagAttributes(null, false, ImmutableDictionary<string, string>.Empty);
+        public static TagAttributes Empty { get; } = new TagAttributes(null, false, new Dictionary<string, string>());
 
-        private readonly ImmutableDictionary<string, string> table;
+        private readonly Dictionary<string, string> table;
 
-        public TagAttributes(string id, bool isRunAtServer, ImmutableDictionary<string, string> table)
+        public TagAttributes(string id, bool isRunAtServer, Dictionary<string, string> table)
         {
             Id = id;
             IsRunAtServer = isRunAtServer;
@@ -37,7 +37,7 @@ namespace AspxParser
         public bool TryGetValue(string key, out string value) =>
             table.TryGetValue(key, out value);
 
-        public ImmutableDictionary<string, string>.Enumerator GetEnumerator() =>
+        public Dictionary<string, string>.Enumerator GetEnumerator() =>
             table.GetEnumerator();
 
         IEnumerator<KeyValuePair<string, string>> IEnumerable<KeyValuePair<string, string>>.GetEnumerator() =>

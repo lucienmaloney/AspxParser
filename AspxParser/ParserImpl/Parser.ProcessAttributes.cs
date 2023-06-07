@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Immutable;
+using System.Collections.Generic;
 using System.Net;
 using System.Text.RegularExpressions;
 
@@ -13,9 +13,9 @@ namespace AspxParser
 
             string id = null;
             bool isRunAtServer = false;
-            var attributes = ImmutableDictionary.CreateBuilder<string, string>(StringComparer.OrdinalIgnoreCase);
             var attributeNames = match.Groups["attrname"].Captures;
             var attributeValues = match.Groups["attrval"].Captures;
+            var attributes = new Dictionary<string, string>(attributeNames.Count, StringComparer.OrdinalIgnoreCase);
             for (var i = 0; i < attributeNames.Count; ++i)
             {
                 var attributeName = attributeNames[i].Value;
@@ -47,7 +47,7 @@ namespace AspxParser
                 }
             }
 
-            return new TagAttributes(id, isRunAtServer, attributes.ToImmutable());
+            return new TagAttributes(id, isRunAtServer, attributes);
         }
     }
 }
